@@ -75,18 +75,26 @@
           "value": "message"
         },
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "FIELD",
+          "name": "message_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "STRING",
           "value": "{"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "message_field",
           "content": {
-            "type": "SYMBOL",
-            "name": "message_field"
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "message_field"
+            }
           }
         },
         {
@@ -99,16 +107,24 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "FIELD",
+          "name": "field_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "STRING",
           "value": ":"
         },
         {
-          "type": "SYMBOL",
-          "name": "warpc_types"
+          "type": "FIELD",
+          "name": "field_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "warpc_types"
+          }
         }
       ]
     },

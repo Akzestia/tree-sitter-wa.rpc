@@ -13,10 +13,10 @@
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 21
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 0
+#define FIELD_COUNT 4
 #define MAX_ALIAS_SEQUENCE_LENGTH 5
 #define MAX_RESERVED_WORD_SET_SIZE 0
-#define PRODUCTION_ID_COUNT 1
+#define PRODUCTION_ID_COUNT 4
 #define SUPERTYPE_COUNT 0
 
 enum ts_symbol_identifiers {
@@ -238,6 +238,38 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = false,
     .named = false,
   },
+};
+
+enum ts_field_identifiers {
+  field_field_name = 1,
+  field_field_type = 2,
+  field_message_field = 3,
+  field_message_name = 4,
+};
+
+static const char * const ts_field_names[] = {
+  [0] = NULL,
+  [field_field_name] = "field_name",
+  [field_field_type] = "field_type",
+  [field_message_field] = "message_field",
+  [field_message_name] = "message_name",
+};
+
+static const TSMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
+  [1] = {.index = 0, .length = 1},
+  [2] = {.index = 1, .length = 2},
+  [3] = {.index = 3, .length = 2},
+};
+
+static const TSFieldMapEntry ts_field_map_entries[] = {
+  [0] =
+    {field_message_name, 1},
+  [1] =
+    {field_message_field, 3},
+    {field_message_name, 1},
+  [3] =
+    {field_field_name, 0},
+    {field_field_type, 2},
 };
 
 static const TSSymbol ts_alias_sequences[PRODUCTION_ID_COUNT][MAX_ALIAS_SEQUENCE_LENGTH] = {
@@ -1076,10 +1108,10 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [39] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_warpc_types_repeat1, 2, 0, 0), SHIFT_REPEAT(22),
   [42] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_basic_type, 1, 0, 0),
   [44] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_source_file_repeat1, 1, 0, 0),
-  [46] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_message, 4, 0, 0),
+  [46] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_message, 4, 0, 1),
   [48] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_message_repeat1, 1, 0, 0),
-  [50] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_message, 5, 0, 0),
-  [52] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_message_field, 3, 0, 0),
+  [50] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_message, 5, 0, 2),
+  [52] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_message_field, 3, 0, 3),
   [54] = {.entry = {.count = 1, .reusable = true}}, SHIFT(20),
   [56] = {.entry = {.count = 1, .reusable = true}},  ACCEPT_INPUT(),
   [58] = {.entry = {.count = 1, .reusable = true}}, SHIFT(5),
@@ -1117,6 +1149,9 @@ TS_PUBLIC const TSLanguage *tree_sitter_warpc(void) {
     .small_parse_table_map = ts_small_parse_table_map,
     .parse_actions = ts_parse_actions,
     .symbol_names = ts_symbol_names,
+    .field_names = ts_field_names,
+    .field_map_slices = ts_field_map_slices,
+    .field_map_entries = ts_field_map_entries,
     .symbol_metadata = ts_symbol_metadata,
     .public_symbol_map = ts_symbol_map,
     .alias_map = ts_non_terminal_alias_map,

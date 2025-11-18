@@ -19,21 +19,25 @@ module.exports = grammar({
 
     block_comment: ($) => token(seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
 
-    // expect `message` + name + block
     message: ($) =>
-      seq("message", $.identifier, "{", repeat($.message_field), "}"),
-
-    // message field: name : type
-    message_field: ($) => seq($.identifier, ":", $.warpc_types),
-
-    // warpc types: either a builtin or an identifier, optionally followed by [] repeats
-    warpc_types: ($) =>
       seq(
-        choice($.basic_type, $.identifier), // builtin or user-defined type
-        repeat(seq("[", "]")), // zero or more array suffixes: [] or [][] ...
+        "message",
+        field("message_name", $.identifier),
+        "{",
+        field("message_field", repeat($.message_field)),
+        "}",
       ),
 
-    // built-in scalar types
+    message_field: ($) =>
+      seq(
+        field("field_name", $.identifier),
+        ":",
+        field("field_type", $.warpc_types),
+      ),
+
+    warpc_types: ($) =>
+      seq(choice($.basic_type, $.identifier), repeat(seq("[", "]"))),
+
     basic_type: () =>
       choice(
         "u8",
@@ -49,7 +53,6 @@ module.exports = grammar({
         "bool",
       ),
 
-    // identifiers should not start with a digit
     identifier: ($) => /[A-Za-z_][A-Za-z0-9_]*/,
   },
 });

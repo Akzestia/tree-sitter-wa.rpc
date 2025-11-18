@@ -27,39 +27,53 @@
   {
     "type": "message",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "message_field",
-          "named": true
-        }
-      ]
+    "fields": {
+      "message_field": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "message_field",
+            "named": true
+          }
+        ]
+      },
+      "message_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
     "type": "message_field",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "warpc_types",
-          "named": true
-        }
-      ]
+    "fields": {
+      "field_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "field_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "warpc_types",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
