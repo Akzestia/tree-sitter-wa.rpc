@@ -1,0 +1,39 @@
+
+/*
+    Routes:
+
+    Range: 0-255
+
+    ---------------------------------
+
+    Flags:
+
+    0x00 - Streaming?
+    0x01 - RESERVED
+    0x02 - RESERVED
+    0x03 - RESERVED
+    0x04 - RESERVED
+    0x05 - RESERVED
+    0x06 - RESERVED
+    0x07 - RESERVED
+
+    ---------------------------------
+
+    Task Status
+
+    0 - COMPLETED
+    1 - FAILED
+*/
+
+message RequestHeader {
+    payload_len: u32
+    route: u8
+    flags: u8
+}
+
+message ResponseHeader {
+    payload_len: u32
+    task_status: u8
+    flags: u8
+    array__field: string[]
+}
